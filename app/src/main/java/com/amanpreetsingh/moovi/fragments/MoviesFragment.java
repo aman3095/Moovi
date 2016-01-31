@@ -75,7 +75,6 @@ public class MoviesFragment extends Fragment {
             return;
         }
         ArrayList<Movie> list = (ArrayList<Movie>) data;
-        Log.d(TAG, "List = "+list);
         gridView.setAdapter(new MovieGridAdapter(getActivity(), list));
         progressBar.setVisibility(View.GONE);
         gridView.setVisibility(View.VISIBLE);
