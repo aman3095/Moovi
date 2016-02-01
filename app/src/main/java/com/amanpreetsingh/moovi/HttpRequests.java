@@ -13,7 +13,9 @@ public class HttpRequests {
 
     public static final String BASE_URL = "http://image.tmdb.org/t/p/";
 
-    public static final String MOVIE = "movie/";
+    public static final String SLASH = "/";
+
+    public static final String MOVIE = "movie";
 
     public static final String QUESTION_MARK = "?";
 
@@ -25,16 +27,22 @@ public class HttpRequests {
 
     public static final String AMPERSAND = "&";
 
+    public static final String DISCOVER = "discover/";
+
+    public static final String SORT_BY = "sort_by";
+
+    public static final String POPULARITY = "popularity.desc";
+
     public static String getMovieURL(int id){
-        return API_SUFFIX + MOVIE + id + QUESTION_MARK + API_KEY + EQUALS + Utils.KEY;
+        return API_SUFFIX + MOVIE + SLASH + id + QUESTION_MARK + API_KEY + EQUALS + Utils.KEY;
     }
 
-    public static String getTopRatedMoviesURL(){
-        return API_SUFFIX + MOVIE + TOP_RATED + QUESTION_MARK + API_KEY + EQUALS + Utils.KEY;
+    public static String getPopularMoviesURL(){
+        return API_SUFFIX + DISCOVER + MOVIE + QUESTION_MARK + SORT_BY + EQUALS + POPULARITY + AMPERSAND + API_KEY + EQUALS + Utils.KEY;
     }
 
-    public static String getTopRatedMoviesURL(int pages){
-        return API_SUFFIX + MOVIE + TOP_RATED + QUESTION_MARK + PAGE + EQUALS + pages + AMPERSAND + API_KEY + EQUALS + Utils.KEY;
+    public static String getPopularMoviesURL(int pageNo){
+        return API_SUFFIX + DISCOVER + MOVIE + QUESTION_MARK + SORT_BY + EQUALS + POPULARITY + AMPERSAND + PAGE + EQUALS + pageNo + AMPERSAND + API_KEY + EQUALS + Utils.KEY;
     }
 
     public static String getPosterURL(String posterPath, String size){
@@ -51,11 +59,11 @@ public class HttpRequests {
         return getRequestFromURL(getMovieURL(id));
     }
 
-    public static Request getTopRateMoviesRequest(){
-        return getRequestFromURL(getTopRatedMoviesURL());
+    public static Request getPopularMoviesRequest(){
+        return getPopularMoviesRequest(1);
     }
 
-    public static Request getTopRateMoviesRequest(int pages){
-        return getRequestFromURL(getTopRatedMoviesURL(pages));
+    public static Request getPopularMoviesRequest(int pages){
+        return getRequestFromURL(getPopularMoviesURL(pages));
     }
 }

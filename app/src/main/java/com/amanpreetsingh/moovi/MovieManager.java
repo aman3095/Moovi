@@ -1,11 +1,8 @@
 package com.amanpreetsingh.moovi;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
-
-import com.amanpreetsingh.moovi.fragments.MoviesFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +31,7 @@ public class MovieManager {
 
     public void fetchTopRatedMoviesList(final IRequestListener listener) throws IOException {
 
-        Request request = HttpRequests.getTopRateMoviesRequest(1);
+        Request request = HttpRequests.getPopularMoviesRequest(1);
         OkClient.getInstance().executeAsync(request, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
