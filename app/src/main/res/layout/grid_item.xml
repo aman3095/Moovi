@@ -8,6 +8,7 @@
         android:id="@+id/image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:maxHeight="150dp"
         android:maxWidth="100dp"
         android:layout_gravity="center"
         android:scaleType="fitCenter"

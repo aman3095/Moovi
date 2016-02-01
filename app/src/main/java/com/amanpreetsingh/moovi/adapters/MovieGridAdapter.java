@@ -71,8 +71,6 @@ public class MovieGridAdapter extends BaseAdapter {
                 .placeholder(R.drawable.image_placeholder)
                 .into(holder.image);
 
-        Log.d("Aman", "height = "+holder.image.getMeasuredHeight());
-
         return convertView;
     }
 
