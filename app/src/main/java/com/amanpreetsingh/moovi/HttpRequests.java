@@ -34,15 +34,15 @@ public class HttpRequests {
     public static final String POPULARITY = "popularity.desc";
 
     public static String getMovieURL(int id){
-        return API_SUFFIX + MOVIE + SLASH + id + QUESTION_MARK + API_KEY + EQUALS + Utils.KEY;
+        return API_SUFFIX + MOVIE + SLASH + id + addFirstParameter(API_KEY, Utils.KEY);
     }
 
     public static String getPopularMoviesURL(){
-        return API_SUFFIX + DISCOVER + MOVIE + QUESTION_MARK + SORT_BY + EQUALS + POPULARITY + AMPERSAND + API_KEY + EQUALS + Utils.KEY;
+        return API_SUFFIX + DISCOVER + MOVIE + addFirstParameter(SORT_BY, POPULARITY) + addParameter(API_KEY, Utils.KEY);
     }
 
     public static String getPopularMoviesURL(int pageNo){
-        return API_SUFFIX + DISCOVER + MOVIE + QUESTION_MARK + SORT_BY + EQUALS + POPULARITY + AMPERSAND + PAGE + EQUALS + pageNo + AMPERSAND + API_KEY + EQUALS + Utils.KEY;
+        return API_SUFFIX + DISCOVER + MOVIE + addFirstParameter(SORT_BY, POPULARITY) + addParameter(PAGE, "" + pageNo) + addParameter(API_KEY, Utils.KEY);
     }
 
     public static String getPosterURL(String posterPath, String size){
@@ -60,10 +60,18 @@ public class HttpRequests {
     }
 
     public static Request getPopularMoviesRequest(){
-        return getPopularMoviesRequest(1);
+        return getRequestFromURL(getPopularMoviesURL());
     }
 
     public static Request getPopularMoviesRequest(int pages){
         return getRequestFromURL(getPopularMoviesURL(pages));
+    }
+
+    public static String addParameter(String param, String value){
+        return AMPERSAND + param + EQUALS + value;
+    }
+
+    public static String addFirstParameter(String param, String value){
+        return QUESTION_MARK + param + EQUALS + value;
     }
 }
