@@ -2,6 +2,7 @@ package com.amanpreetsingh.moovi.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -81,9 +82,14 @@ public class MoviesFragment extends Fragment {
     }
 
     public void failureHandling(){
-        Toast.makeText(getActivity(), "Failed to fetch movies!", Toast.LENGTH_SHORT).show();
-        progressBar.setVisibility(View.VISIBLE);
-        gridView.setVisibility(View.GONE);
+        Handler handler = new Handler(getActivity().getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getActivity(), "Failed to fetch movies!", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
 }

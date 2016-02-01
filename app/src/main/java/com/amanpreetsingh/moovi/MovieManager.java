@@ -42,6 +42,7 @@ public class MovieManager {
             public void onResponse(Call call, Response response) throws IOException {
                 if (!response.isSuccessful()){
                     listener.onFailure();
+                    return;
                 }
                 final String jsonString = response.body().string();
                 Handler handler = new Handler(mContext.getMainLooper());
