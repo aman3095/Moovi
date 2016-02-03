@@ -17,21 +17,20 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by Admin on 1/29/2016.
+ * Created by Admin on 2/3/2016.
  */
-public class MovieManager {
-
-    public final String TAG = "MovieManager";
+public class TVManager {
 
     Context mContext;
 
-    public MovieManager(Context context){
+    public static final String TAG = "TVManager";
+
+    public TVManager(Context context){
         mContext = context;
     }
 
-    public void fetchPopularMoviesList(final IRequestListener listener) throws IOException {
-
-        Request request = HttpRequests.getPopularMoviesRequest(1);
+    public void fetchPopularTvShows(final IRequestListener listener) throws IOException {
+        Request request = HttpRequests.getPopularTvShowsRequest();
         OkClient.getInstance().executeAsync(request, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -44,6 +43,7 @@ public class MovieManager {
                     listener.onFailure();
                     return;
                 }
+
                 final String jsonString = response.body().string();
                 Handler handler = new Handler(mContext.getMainLooper());
                 handler.post(new Runnable() {
@@ -51,7 +51,7 @@ public class MovieManager {
                     public void run() {
                         try {
                             JSONObject json = new JSONObject(jsonString);
-                            listener.onSuccess(getMoviesFromResults(json));
+                            listener.onSuccess(getTvShowsFromResults(json));
 
                         } catch (Exception e) {
                             listener.onFailure();
@@ -63,12 +63,11 @@ public class MovieManager {
         });
     }
 
-    public ArrayList<Movie> getMoviesFromResults(JSONObject data) {
-
-        ArrayList<Movie> list = new ArrayList<>();
+    public ArrayList<TVShow> getTvShowsFromResults(JSONObject data){
+        ArrayList<TVShow> list = new ArrayList<>();
 
         if (data == null || !data.has(Constants.RESULTS)){
-            Log.e(TAG, "Data to getMoviesFromResults is null. Returning.");
+            Log.e(TAG, "Data to getTvShowsFromResults is null. Returning.");
             return null;
         }
 
@@ -76,11 +75,11 @@ public class MovieManager {
         try {
 
             resultsArray = data.getJSONArray(Constants.RESULTS);
-            JSONObject movieJson;
+            JSONObject tvJson;
             for (int n = 0; n < resultsArray.length(); n++){
-                movieJson = resultsArray.getJSONObject(n);
-                Movie movie = new Movie(movieJson);
-                list.add(movie);
+                tvJson = resultsArray.getJSONObject(n);
+                TVShow tvShow = new TVShow(tvJson);
+                list.add(tvShow);
             }
 
         } catch (JSONException e) {

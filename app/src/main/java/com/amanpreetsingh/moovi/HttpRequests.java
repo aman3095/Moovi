@@ -33,6 +33,8 @@ public class HttpRequests {
 
     public static final String POPULARITY = "popularity.desc";
 
+    public static final String TV = "tv";
+
     public static String getMovieURL(int id){
         return API_SUFFIX + MOVIE + SLASH + id + addFirstParameter(API_KEY, Utils.KEY);
     }
@@ -47,6 +49,14 @@ public class HttpRequests {
 
     public static String getPosterURL(String posterPath, String size){
         return BASE_URL + size + posterPath;
+    }
+
+    public static String getPopularTvShowsURL(){
+        return API_SUFFIX + DISCOVER + TV + addFirstParameter(SORT_BY, POPULARITY) + addParameter(API_KEY, Utils.KEY);
+    }
+
+    public static String getPopularTvShowsURL(int pageNo){
+        return API_SUFFIX + DISCOVER + TV + addFirstParameter(SORT_BY, POPULARITY) + addParameter(PAGE, "" + pageNo) + addParameter(API_KEY, Utils.KEY);
     }
 
     public static Request getRequestFromURL(String url){
@@ -65,6 +75,14 @@ public class HttpRequests {
 
     public static Request getPopularMoviesRequest(int pages){
         return getRequestFromURL(getPopularMoviesURL(pages));
+    }
+
+    public static Request getPopularTvShowsRequest(){
+        return getPopularTvShowsRequest(1);
+    }
+
+    public static Request getPopularTvShowsRequest(int pageNo){
+        return getRequestFromURL(getPopularTvShowsURL(pageNo));
     }
 
     public static String addParameter(String param, String value){

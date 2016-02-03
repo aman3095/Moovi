@@ -15,6 +15,8 @@ public class Constants {
 
     public static final String TITLE = "title";
 
+    public static final String NAME = "name";
+
     public static class PosterSizes{
         public static final String W92 = "w92";
         public static final String W185 = "w185";
