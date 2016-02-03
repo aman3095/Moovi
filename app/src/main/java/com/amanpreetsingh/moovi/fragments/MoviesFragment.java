@@ -13,15 +13,11 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.amanpreetsingh.moovi.Constants;
 import com.amanpreetsingh.moovi.IRequestListener;
 import com.amanpreetsingh.moovi.Movie;
 import com.amanpreetsingh.moovi.MovieManager;
 import com.amanpreetsingh.moovi.R;
 import com.amanpreetsingh.moovi.adapters.MovieGridAdapter;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +48,7 @@ public class MoviesFragment extends Fragment {
 
     public void populateGrid(){
         try {
-            movieManager.fetchTopRatedMoviesList(new IRequestListener() {
+            movieManager.fetchPopularMoviesList(new IRequestListener() {
                 @Override
                 public void onSuccess(Object data) {
                     Log.d(TAG, "onSuccess");
