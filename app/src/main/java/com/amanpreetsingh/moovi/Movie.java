@@ -14,14 +14,18 @@ public class Movie extends EntertainmentEntity {
 
     private String releaseDate;
 
+    private double voteAverage;
+
     public Movie(String data) throws JSONException {
         this(new JSONObject(data));
     }
 
     public Movie(JSONObject data){
-        setPosterPath(data.optString(Constants.POSTER_PATH));
-        setTitle(data.optString(Constants.TITLE));
         setId(data.optInt(Constants.ID));
+        setTitle(data.optString(Constants.TITLE));
+        setPosterPath(data.optString(Constants.POSTER_PATH));
+        setBackdropPath(data.optString(Constants.BACKDROP_PATH));
+        setVoteAverage(data.optDouble(Constants.VOTE_AVERAGE));
     }
 
     public String getTagline() {
@@ -46,6 +50,14 @@ public class Movie extends EntertainmentEntity {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     @Override

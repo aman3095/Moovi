@@ -1,6 +1,6 @@
 package com.amanpreetsingh.moovi.fragments;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -9,16 +9,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.amanpreetsingh.moovi.Constants;
 import com.amanpreetsingh.moovi.IRequestListener;
 import com.amanpreetsingh.moovi.Movie;
 import com.amanpreetsingh.moovi.R;
 import com.amanpreetsingh.moovi.TVManager;
 import com.amanpreetsingh.moovi.TVShow;
-import com.amanpreetsingh.moovi.adapters.MovieGridAdapter;
+import com.amanpreetsingh.moovi.activities.DetailActivity;
 import com.amanpreetsingh.moovi.adapters.TVGridAdapter;
 
 import java.io.IOException;
@@ -27,11 +29,12 @@ import java.util.ArrayList;
 /**
  * Created by Aman on 1/27/2016.
  */
-public class TVFragment extends Fragment {
+public class TVFragment extends Fragment implements GridView.OnItemClickListener {
 
     GridView mGridView;
     TVManager mTvManager;
     ProgressBar mProgessBar;
+    ArrayList<TVShow> mTvShowsList;
 
     public static final String TAG = "TVFragment";
 
@@ -40,6 +43,7 @@ public class TVFragment extends Fragment {
         View view = inflater.inflate(R.layout.tab_tv, container, false);
 
         mGridView = (GridView) view.findViewById(R.id.grid_view);
+        mGridView.setOnItemClickListener(this);
         mProgessBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         mTvManager = new TVManager(getActivity());
 
@@ -74,8 +78,8 @@ public class TVFragment extends Fragment {
             return;
         }
 
-        ArrayList<TVShow> list = (ArrayList<TVShow>) data;
-        mGridView.setAdapter(new TVGridAdapter(getActivity(), list));
+        mTvShowsList = (ArrayList<TVShow>) data;
+        mGridView.setAdapter(new TVGridAdapter(getActivity(), mTvShowsList));
         mProgessBar.setVisibility(View.GONE);
         mGridView.setVisibility(View.VISIBLE);
     }
@@ -89,5 +93,23 @@ public class TVFragment extends Fragment {
                 mProgessBar.setVisibility(View.GONE);
             }
         });
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (mTvShowsList == null || mTvShowsList.isEmpty()){
+            return;
+        }
+
+        TVShow tvShow = mTvShowsList.get(position);
+
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(Constants.ID, tvShow.getId());
+        intent.putExtra(Constants.TYPE, Constants.TYPE_TV);
+        intent.putExtra(Constants.TITLE, tvShow.getTitle());
+        intent.putExtra(Constants.POSTER_PATH, tvShow.getPosterPath());
+
+        startActivity(intent);
     }
 }

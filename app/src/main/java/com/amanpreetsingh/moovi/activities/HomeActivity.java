@@ -1,4 +1,4 @@
-package com.amanpreetsingh.moovi;
+package com.amanpreetsingh.moovi.activities;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.amanpreetsingh.moovi.R;
 import com.amanpreetsingh.moovi.adapters.SlidingPagerAdapter;
 import com.amanpreetsingh.moovi.slidingtabs.SlidingTabLayout;
 
