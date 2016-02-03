@@ -25,6 +25,8 @@ public class Constants {
 
     public static final int TYPE_TV = 1;
 
+    public static final String NAME = "name";
+
     public static class PosterSizes{
         public static final String W92 = "w92";
         public static final String W185 = "w185";

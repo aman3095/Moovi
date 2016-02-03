@@ -23,10 +23,6 @@ import com.amanpreetsingh.moovi.R;
 import com.amanpreetsingh.moovi.activities.DetailActivity;
 import com.amanpreetsingh.moovi.adapters.MovieGridAdapter;
 
-import org.apache.http.entity.ContentLengthStrategy;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -59,7 +55,7 @@ public class MoviesFragment extends Fragment implements GridView.OnItemClickList
 
     public void populateGrid(){
         try {
-            movieManager.fetchTopRatedMoviesList(new IRequestListener() {
+            movieManager.fetchPopularMoviesList(new IRequestListener() {
                 @Override
                 public void onSuccess(Object data) {
                     Log.d(TAG, "onSuccess");
