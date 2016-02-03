@@ -82,7 +82,13 @@ public class DetailActivity extends ActionBarActivity {
     }
 
     public void setupTvView(Intent intent){
-        // WIP
+        String title = intent.getStringExtra(Constants.TITLE);
+        String posterPath = intent.getStringExtra(Constants.POSTER_PATH);
+
+        setBackgroundPicture(posterPath);
+
+        TextView tv = (TextView) findViewById(R.id.title);
+        tv.setText(title);
     }
 
     @Override
