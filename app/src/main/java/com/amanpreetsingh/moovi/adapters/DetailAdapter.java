@@ -1,6 +1,7 @@
 package com.amanpreetsingh.moovi.adapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * Created by Aman on 5/29/2016.
  */
 
-public class DetailAdapter extends BaseAdapter{
+public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final String TAG = "DetailAdapter";
 
@@ -33,55 +34,44 @@ public class DetailAdapter extends BaseAdapter{
     }
 
     @Override
-    public int getCount() {
-        return detailObjects.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return detailObjects.get(position);
-    }
-
-    @Override
     public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public int getViewTypeCount() {
-        return Constants.DETAIL_VIEW_TYPES;
+    public int getItemCount() {
+        return detailObjects.size();
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return detailObjects.get(position).getType();
-    }
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        int type = getItemViewType(position);
-
-        switch(type) {
+        switch (viewType) {
             case Constants.DetailViewTypes.LANDING_ITEM:
-                LandingViewHolder landingViewHolder;
-                View landingView = convertView;
 
-                if (landingView == null){
-                    landingViewHolder = new LandingViewHolder();
+                View landingView = inflater.inflate(R.layout.detail_list_landing_item, parent, false);
+                LandingViewHolder landingHolder = new LandingViewHolder(landingView);
+                landingView.setMinimumHeight(parent.getMeasuredHeight());
+                return landingHolder;
 
-                    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    landingView = inflater.inflate(R.layout.detail_list_landing_item, parent, false);
+            case Constants.DetailViewTypes.SUMMARY_ITEM:
 
-                    landingViewHolder.title = (TextView) landingView.findViewById(R.id.title);
-                    landingViewHolder.rating = (TextView) landingView.findViewById(R.id.rating);
+                View summaryView = inflater.inflate(R.layout.detail_list_summary_item, parent, false);
+                SummaryViewHolder summaryHolder = new SummaryViewHolder(summaryView);
 
-                    landingView.setTag(landingViewHolder);
-                    landingView.setMinimumHeight(parent.getMeasuredHeight());
-                } else {
-                    landingViewHolder = (LandingViewHolder) landingView.getTag();
-                }
+                return summaryHolder;
+        }
 
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        switch (getItemViewType(position)) {
+            case Constants.DetailViewTypes.LANDING_ITEM:
                 LandingDetailObject landingObject = (LandingDetailObject) detailObjects.get(position);
+                LandingViewHolder landingViewHolder = (LandingViewHolder) holder;
 
                 landingViewHolder.title.setText(landingObject.getLandingDetailTitle());
                 if (landingObject.getRating() == -1.0){
@@ -89,45 +79,42 @@ public class DetailAdapter extends BaseAdapter{
                 } else {
                     landingViewHolder.rating.setText("" + landingObject.getRating());
                 }
-
-                return landingView;
+                break;
 
             case Constants.DetailViewTypes.SUMMARY_ITEM:
-                SummaryViewHolder summaryViewHolder;
-                View summaryView = convertView;
-
-                if (summaryView == null){
-                    summaryViewHolder = new SummaryViewHolder();
-
-                    LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    summaryView = inflater.inflate(R.layout.detail_list_summary_item, parent, false);
-
-                    summaryViewHolder.viewTitle = (TextView) summaryView.findViewById(R.id.title);
-                    summaryViewHolder.summaryText = (TextView) summaryView.findViewById(R.id.summary);
-                    summaryView.setTag(summaryViewHolder);
-                } else {
-                    summaryViewHolder = (SummaryViewHolder) summaryView.getTag();
-                }
-
                 SummaryDetailObject summaryObject = (SummaryDetailObject) detailObjects.get(position);
+                SummaryViewHolder summaryViewHolder = (SummaryViewHolder) holder;
 
                 summaryViewHolder.viewTitle.setText(R.string.summary_title);
                 summaryViewHolder.summaryText.setText(summaryObject.getSummaryText());
-
-                return summaryView;
-            default:
-                Log.d(TAG, "View type " + type +" does not exist.");
-                return new View(mContext);
+                break;
         }
     }
 
-    class LandingViewHolder{
-        public TextView title;
-        public TextView rating;
+    @Override
+    public int getItemViewType(int position) {
+        return detailObjects.get(position).getType();
     }
 
-    class SummaryViewHolder{
+    class LandingViewHolder extends RecyclerView.ViewHolder{
+        public TextView title;
+        public TextView rating;
+
+        public LandingViewHolder(View item) {
+            super(item);
+            title = (TextView) item.findViewById(R.id.title);
+            rating = (TextView) item.findViewById(R.id.rating);
+        }
+    }
+
+    class SummaryViewHolder extends RecyclerView.ViewHolder{
         public TextView viewTitle;
         public TextView summaryText;
+
+        public SummaryViewHolder(View item) {
+            super(item);
+            viewTitle = (TextView) item.findViewById(R.id.title);
+            summaryText = (TextView) item.findViewById(R.id.summary);
+        }
     }
 }

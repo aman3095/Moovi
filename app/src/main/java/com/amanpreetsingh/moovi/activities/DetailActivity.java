@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.amanpreetsingh.moovi.Constants;
 import com.amanpreetsingh.moovi.HttpRequests;
@@ -18,9 +19,13 @@ import com.amanpreetsingh.moovi.Utils;
 import com.amanpreetsingh.moovi.adapters.DetailAdapter;
 import com.squareup.picasso.Picasso;
 
-public class DetailActivity extends ActionBarActivity {
+public class DetailActivity extends ActionBarActivity{
 
     Toolbar mToolbar;
+    //private ListView mDetailRecyclerView;
+    private RecyclerView mDetailRecyclerView;
+    private int mLastFirstVisibleItem;
+    private boolean mIsScrollingUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +60,11 @@ public class DetailActivity extends ActionBarActivity {
 
         setBackgroundPicture(posterPath);
 
-        ListView detailListView = (ListView) findViewById(R.id.detail_list);
+        mDetailRecyclerView = (RecyclerView) findViewById(R.id.detail_list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mDetailRecyclerView.setLayoutManager(layoutManager);
         DetailAdapter detailAdapter = new DetailAdapter(this, Utils.getDetailObjectList(intent));
-        detailListView.setAdapter(detailAdapter);
+        mDetailRecyclerView.setAdapter(detailAdapter);
     }
 
     public void setBackgroundPicture(String posterPath){
@@ -88,4 +95,5 @@ public class DetailActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

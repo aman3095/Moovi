@@ -19,8 +19,7 @@
             android:layout_height="wrap_content"
             android:textSize="40sp"
             android:textColor="#ffffff"
-            android:fontFamily="sans-serif-light"
-            android:text="shawshank"/>
+            android:fontFamily="sans-serif-light"/>
 
         <TextView
             android:id="@+id/rating"
