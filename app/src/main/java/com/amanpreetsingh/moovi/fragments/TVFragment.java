@@ -113,6 +113,7 @@ public class TVFragment extends Fragment implements RecyclerViewClickListener {
         intent.putExtra(Constants.TYPE, Constants.TYPE_TV);
         intent.putExtra(Constants.TITLE, tvShow.getTitle());
         intent.putExtra(Constants.POSTER_PATH, tvShow.getPosterPath());
+        intent.putExtra(Constants.OVERVIEW, tvShow.getOverview());
 
         startActivity(intent);
     }

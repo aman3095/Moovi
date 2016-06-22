@@ -12,6 +12,7 @@ public class TVShow extends EntertainmentEntity {
         setTitle(data.optString(Constants.NAME));
         setPosterPath(data.optString(Constants.POSTER_PATH));
         setBackdropPath(data.optString(Constants.BACKDROP_PATH));
+        setOverview(data.optString(Constants.OVERVIEW));
     }
 
 }
