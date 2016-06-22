@@ -5,5 +5,5 @@ package com.amanpreetsingh.moovi;
  */
 public class Utils {
 
-    public static final String KEY = "7b5e30851a9285340e78c201c4e4ab99";
+    public static final String KEY = "c046f13f3bf575524a6dc79b7b8e5853";
 }

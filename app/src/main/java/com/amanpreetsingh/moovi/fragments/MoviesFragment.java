@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +22,9 @@ import com.amanpreetsingh.moovi.IRequestListener;
 import com.amanpreetsingh.moovi.Movie;
 import com.amanpreetsingh.moovi.MovieManager;
 import com.amanpreetsingh.moovi.R;
+import com.amanpreetsingh.moovi.RecyclerViewClickListener;
 import com.amanpreetsingh.moovi.activities.DetailActivity;
-import com.amanpreetsingh.moovi.adapters.MovieGridAdapter;
+import com.amanpreetsingh.moovi.adapters.MovieListAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,10 +32,11 @@ import java.util.ArrayList;
 /**
  * Created by Admin on 1/27/2016.
  */
-public class MoviesFragment extends Fragment implements GridView.OnItemClickListener {
+public class MoviesFragment extends Fragment implements RecyclerViewClickListener {
 
     MovieManager movieManager;
-    GridView gridView;
+    RecyclerView mMoviesRecyclerView;
+    RecyclerView.LayoutManager mLayoutManager;
     ProgressBar progressBar;
     ArrayList<Movie> moviesList;
 
@@ -42,18 +46,16 @@ public class MoviesFragment extends Fragment implements GridView.OnItemClickList
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_movies, container, false);
 
-        gridView = (GridView) view.findViewById(R.id.grid_view);
+        mMoviesRecyclerView = (RecyclerView) view.findViewById(R.id.movies_list);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         movieManager = new MovieManager(getActivity());
 
-        populateGrid();
-
-        gridView.setOnItemClickListener(this);
+        populateMoviesList();
 
         return view;
     }
 
-    public void populateGrid(){
+    public void populateMoviesList(){
         try {
             movieManager.fetchPopularMoviesList(new IRequestListener() {
                 @Override
@@ -79,9 +81,11 @@ public class MoviesFragment extends Fragment implements GridView.OnItemClickList
             return;
         }
         moviesList = (ArrayList<Movie>) data;
-        gridView.setAdapter(new MovieGridAdapter(getActivity(), moviesList));
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mMoviesRecyclerView.setLayoutManager(mLayoutManager);
+        mMoviesRecyclerView.setAdapter(new MovieListAdapter(getActivity(), moviesList, this));
         progressBar.setVisibility(View.GONE);
-        gridView.setVisibility(View.VISIBLE);
+        mMoviesRecyclerView.setVisibility(View.VISIBLE);
     }
 
     public void failureHandling(){
@@ -96,7 +100,7 @@ public class MoviesFragment extends Fragment implements GridView.OnItemClickList
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClicked(int position) {
         if (moviesList == null || moviesList.isEmpty()){
             return;
         }
