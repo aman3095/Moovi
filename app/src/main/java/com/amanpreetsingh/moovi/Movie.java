@@ -25,7 +25,8 @@ public class Movie extends EntertainmentEntity {
         setTitle(data.optString(Constants.TITLE));
         setPosterPath(data.optString(Constants.POSTER_PATH));
         setBackdropPath(data.optString(Constants.BACKDROP_PATH));
-        setVoteAverage(data.optDouble(Constants.VOTE_AVERAGE));
+        setVoteAverage(data.optDouble(Constants.RATING));
+        setOverview(data.optString(Constants.OVERVIEW));
     }
 
     public String getTagline() {

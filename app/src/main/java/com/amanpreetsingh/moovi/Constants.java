@@ -17,7 +17,7 @@ public class Constants {
 
     public static final String BACKDROP_PATH = "backdrop_path";
 
-    public static final String VOTE_AVERAGE = "vote_average";
+    public static final String RATING = "vote_average";
 
     public static final String TYPE = "type";
 
@@ -26,6 +26,14 @@ public class Constants {
     public static final int TYPE_TV = 1;
 
     public static final String NAME = "name";
+
+    public static final int DETAIL_VIEW_TYPES = 3;
+
+    public static class DetailViewTypes{
+        public static final int LANDING_ITEM = 0;
+        public static final int SUMMARY_ITEM = 1;
+        public static final int HORIZONTAL_ADAPTER = 2;
+    }
 
     public static class PosterSizes{
         public static final String W92 = "w92";
