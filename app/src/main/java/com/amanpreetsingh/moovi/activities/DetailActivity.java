@@ -1,29 +1,31 @@
 package com.amanpreetsingh.moovi.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.amanpreetsingh.moovi.Constants;
 import com.amanpreetsingh.moovi.HttpRequests;
 import com.amanpreetsingh.moovi.R;
+import com.amanpreetsingh.moovi.Utils;
+import com.amanpreetsingh.moovi.adapters.DetailAdapter;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-public class DetailActivity extends ActionBarActivity {
+public class DetailActivity extends ActionBarActivity{
 
     Toolbar mToolbar;
+    //private ListView mDetailRecyclerView;
+    private RecyclerView mDetailRecyclerView;
+    private int mLastFirstVisibleItem;
+    private boolean mIsScrollingUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +52,19 @@ public class DetailActivity extends ActionBarActivity {
 
     public void setupView(Intent intent){
 
-        int type = intent.getIntExtra(Constants.TYPE, Constants.TYPE_MOVIE);
+        String title = intent.getStringExtra(Constants.TITLE);
+        int id = intent.getIntExtra(Constants.ID, -1);
+        double rating = intent.getDoubleExtra(Constants.RATING, -1);
+        String posterPath = intent.getStringExtra(Constants.POSTER_PATH);
+        String overview = intent.getStringExtra(Constants.OVERVIEW);
 
-        switch (type){
-            case Constants.TYPE_MOVIE:
-                setupMovieView(intent);
-                break;
-            case Constants.TYPE_TV:
-                setupTvView(intent);
-                break;
-        }
+        setBackgroundPicture(posterPath);
+
+        mDetailRecyclerView = (RecyclerView) findViewById(R.id.detail_list);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mDetailRecyclerView.setLayoutManager(layoutManager);
+        DetailAdapter detailAdapter = new DetailAdapter(this, Utils.getDetailObjectList(intent));
+        mDetailRecyclerView.setAdapter(detailAdapter);
     }
 
     public void setBackgroundPicture(String posterPath){
@@ -67,28 +72,6 @@ public class DetailActivity extends ActionBarActivity {
         Picasso.with(this)
                 .load(HttpRequests.getPosterURL(posterPath, Constants.PosterSizes.W500))
                 .into(backgroundImage);
-    }
-
-    public void setupMovieView(Intent intent){
-        String title = intent.getStringExtra(Constants.TITLE);
-        int id = intent.getIntExtra(Constants.ID, -1);
-        double vote = intent.getDoubleExtra(Constants.VOTE_AVERAGE, -1);
-        String posterPath = intent.getStringExtra(Constants.POSTER_PATH);
-
-        setBackgroundPicture(posterPath);
-
-        TextView tv = (TextView) findViewById(R.id.title);
-        tv.setText(title);
-    }
-
-    public void setupTvView(Intent intent){
-        String title = intent.getStringExtra(Constants.TITLE);
-        String posterPath = intent.getStringExtra(Constants.POSTER_PATH);
-
-        setBackgroundPicture(posterPath);
-
-        TextView tv = (TextView) findViewById(R.id.title);
-        tv.setText(title);
     }
 
     @Override
@@ -112,4 +95,5 @@ public class DetailActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

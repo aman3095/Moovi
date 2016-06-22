@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.0.0'
     compile files('libs/okhttp-3.0.1.jar')
     compile files('libs/picasso-2.5.2.jar')
+    compile 'com.android.support:recyclerview-v7:23.0.1'
 }

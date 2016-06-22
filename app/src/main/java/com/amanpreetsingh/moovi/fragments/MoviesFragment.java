@@ -112,7 +112,8 @@ public class MoviesFragment extends Fragment implements RecyclerViewClickListene
         intent.putExtra(Constants.TYPE, Constants.TYPE_MOVIE);
         intent.putExtra(Constants.TITLE, movie.getTitle());
         intent.putExtra(Constants.POSTER_PATH, movie.getPosterPath());
-        intent.putExtra(Constants.VOTE_AVERAGE, movie.getVoteAverage());
+        intent.putExtra(Constants.RATING, movie.getVoteAverage());
+        intent.putExtra(Constants.OVERVIEW, movie.getOverview());
 
         startActivity(intent);
     }
