@@ -51,6 +51,10 @@ public class HttpRequests {
         return BASE_URL + size + posterPath;
     }
 
+    public static String getBackdropURL(String backgroundPath, String size){
+        return BASE_URL + size + backgroundPath;
+    }
+
     public static String getPopularTvShowsURL(){
         return API_SUFFIX + DISCOVER + TV + addFirstParameter(SORT_BY, POPULARITY) + addParameter(API_KEY, Utils.KEY);
     }
