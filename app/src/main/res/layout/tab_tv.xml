@@ -12,22 +12,10 @@
         style="@android:style/Widget.Holo.Light.ProgressBar"
     />
 
-    <GridView
-        android:id="@+id/grid_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/tv_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:numColumns="auto_fit"
-        android:columnWidth="100dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:horizontalSpacing="7dp"
-        android:verticalSpacing="7dp"
-        android:visibility="gone"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:descendantFocusability="blocksDescendants"
-        android:drawSelectorOnTop="true"
-        />
+        android:visibility="gone"/>
 
 </RelativeLayout>

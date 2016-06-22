@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +18,12 @@ import android.widget.Toast;
 
 import com.amanpreetsingh.moovi.Constants;
 import com.amanpreetsingh.moovi.IRequestListener;
-import com.amanpreetsingh.moovi.Movie;
 import com.amanpreetsingh.moovi.R;
+import com.amanpreetsingh.moovi.RecyclerViewClickListener;
 import com.amanpreetsingh.moovi.TVManager;
 import com.amanpreetsingh.moovi.TVShow;
 import com.amanpreetsingh.moovi.activities.DetailActivity;
-import com.amanpreetsingh.moovi.adapters.TVGridAdapter;
+import com.amanpreetsingh.moovi.adapters.TVListAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,9 +31,10 @@ import java.util.ArrayList;
 /**
  * Created by Aman on 1/27/2016.
  */
-public class TVFragment extends Fragment implements GridView.OnItemClickListener {
+public class TVFragment extends Fragment implements RecyclerViewClickListener {
 
-    GridView mGridView;
+    RecyclerView mTvRecyclerView;
+    RecyclerView.LayoutManager mLayoutManager;
     TVManager mTvManager;
     ProgressBar mProgessBar;
     ArrayList<TVShow> mTvShowsList;
@@ -42,17 +45,16 @@ public class TVFragment extends Fragment implements GridView.OnItemClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_tv, container, false);
 
-        mGridView = (GridView) view.findViewById(R.id.grid_view);
-        mGridView.setOnItemClickListener(this);
+        mTvRecyclerView = (RecyclerView) view.findViewById(R.id.tv_list);
         mProgessBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         mTvManager = new TVManager(getActivity());
 
-        populateGrid();
+        populateTVShowList();
 
         return view;
     }
 
-    public void populateGrid(){
+    public void populateTVShowList(){
         try {
             mTvManager.fetchPopularTvShows(new IRequestListener() {
                 @Override
@@ -79,9 +81,11 @@ public class TVFragment extends Fragment implements GridView.OnItemClickListener
         }
 
         mTvShowsList = (ArrayList<TVShow>) data;
-        mGridView.setAdapter(new TVGridAdapter(getActivity(), mTvShowsList));
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mTvRecyclerView.setLayoutManager(mLayoutManager);
+        mTvRecyclerView.setAdapter(new TVListAdapter(getActivity(), mTvShowsList, this));
         mProgessBar.setVisibility(View.GONE);
-        mGridView.setVisibility(View.VISIBLE);
+        mTvRecyclerView.setVisibility(View.VISIBLE);
     }
 
     public void failureHandling(){
@@ -97,7 +101,7 @@ public class TVFragment extends Fragment implements GridView.OnItemClickListener
 
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClicked(int position) {
         if (mTvShowsList == null || mTvShowsList.isEmpty()){
             return;
         }
