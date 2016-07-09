@@ -15,6 +15,8 @@ import com.amanpreetsingh.moovi.RecyclerViewClickListener;
 import com.amanpreetsingh.moovi.TVShow;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -43,6 +45,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.mTVShowName.setText(tvList.get(position).getTitle());
+        holder.mYearGenre.setText(tvList.get(position).getYearGenre());
         Picasso.with(mContext)
                 .load(HttpRequests.getBackdropURL(tvList.get(position).getBackdropPath(), Constants.PosterSizes.W342))
                 .placeholder(R.drawable.image_placeholder)
@@ -59,6 +62,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
 
         ImageView mTVShowBackdrop;
         TextView mTVShowName;
+        TextView mYearGenre;
         RecyclerViewClickListener mClickListener;
 
         public ViewHolder(View view, RecyclerViewClickListener listener) {
@@ -67,6 +71,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
             mClickListener = listener;
             mTVShowBackdrop = (ImageView) view.findViewById(R.id.background_image);
             mTVShowName = (TextView) view.findViewById(R.id.name);
+            mYearGenre = (TextView) view.findViewById(R.id.year_genre);
         }
 
         @Override

@@ -21,6 +21,8 @@ public class Constants {
 
     public static final String TYPE = "type";
 
+    public static final String RELEASE_DATE = "release_date";
+
     public static final int TYPE_MOVIE = 0;
 
     public static final int TYPE_TV = 1;
@@ -28,6 +30,18 @@ public class Constants {
     public static final String NAME = "name";
 
     public static final int DETAIL_VIEW_TYPES = 3;
+
+    public static final String SHARED_PREFS = "moovi_shared_prefs";
+
+    public static final String GENRES = "genres";
+
+    public static final String GENRE_IDS = "genre_ids";
+
+    public static final String MOVIE_GENRE_LIST = "movie_genre_list";
+
+    public static final String TV_GENRE_LIST = "tv_genre_list";
+
+    public static final String FIRST_AIRED_DATE = "first_air_date";
 
     public static class DetailViewTypes{
         public static final int LANDING_ITEM = 0;

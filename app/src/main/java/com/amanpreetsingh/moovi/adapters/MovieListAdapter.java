@@ -42,9 +42,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.mMovieName.setText(moviesList.get(position).getTitle());
+        Movie movie = moviesList.get(position);
+
+        holder.mMovieName.setText(movie.getTitle());
+        holder.mYearGenre.setText(movie.getYearGenre());
         Picasso.with(mContext)
-                .load(HttpRequests.getBackdropURL(moviesList.get(position).getBackdropPath(), Constants.PosterSizes.W342))
+                .load(HttpRequests.getBackdropURL(movie.getBackdropPath(), Constants.PosterSizes.W342))
                 .placeholder(R.drawable.image_placeholder)
                 .into(holder.mMovieImage);
 
@@ -60,6 +63,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         RecyclerViewClickListener mClickListener;
         ImageView mMovieImage;
         TextView mMovieName;
+        TextView mYearGenre;
 
         public ViewHolder(View view, RecyclerViewClickListener listener) {
             super(view);
@@ -67,6 +71,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
             view.setOnClickListener(this);
             mMovieImage = (ImageView) view.findViewById(R.id.background_image);
             mMovieName = (TextView) view.findViewById(R.id.name);
+            mYearGenre = (TextView) view.findViewById(R.id.year_genre);
         }
 
         @Override
