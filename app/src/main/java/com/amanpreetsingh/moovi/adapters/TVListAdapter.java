@@ -2,6 +2,11 @@ package com.amanpreetsingh.moovi.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +15,11 @@ import android.widget.TextView;
 
 import com.amanpreetsingh.moovi.Constants;
 import com.amanpreetsingh.moovi.HttpRequests;
+import com.amanpreetsingh.moovi.Movie;
 import com.amanpreetsingh.moovi.R;
 import com.amanpreetsingh.moovi.RecyclerViewClickListener;
 import com.amanpreetsingh.moovi.TVShow;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -44,8 +48,8 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.mTVShowName.setText(tvList.get(position).getTitle());
-        holder.mYearGenre.setText(tvList.get(position).getYearGenre());
+        holder.mTVShowName.setText(getTVNameYearSpan(tvList.get(position)));
+        holder.rating.setText(tvList.get(position).getYearGenre());
         Picasso.with(mContext)
                 .load(HttpRequests.getBackdropURL(tvList.get(position).getBackdropPath(), Constants.PosterSizes.W342))
                 .placeholder(R.drawable.image_placeholder)
@@ -62,7 +66,7 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
 
         ImageView mTVShowBackdrop;
         TextView mTVShowName;
-        TextView mYearGenre;
+        TextView rating;
         RecyclerViewClickListener mClickListener;
 
         public ViewHolder(View view, RecyclerViewClickListener listener) {
@@ -71,13 +75,24 @@ public class TVListAdapter extends RecyclerView.Adapter<TVListAdapter.ViewHolder
             mClickListener = listener;
             mTVShowBackdrop = (ImageView) view.findViewById(R.id.background_image);
             mTVShowName = (TextView) view.findViewById(R.id.name);
-            mYearGenre = (TextView) view.findViewById(R.id.year_genre);
+            rating = (TextView) view.findViewById(R.id.rating);
         }
 
         @Override
         public void onClick(View v) {
             mClickListener.onItemClicked(getLayoutPosition());
         }
+    }
+
+    public Spannable getTVNameYearSpan (TVShow tvShow){
+        String str = tvShow.getTitle() + " (" + tvShow.getYear() + ")";
+        Spannable span = new SpannableString(str);
+        int spanStartIndex = tvShow.getTitle().length();
+        int spanEndIndex = str.length();
+        span.setSpan(new RelativeSizeSpan(0.55f), spanStartIndex, spanEndIndex, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        span.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_OPPOSITE), spanStartIndex, spanEndIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return span;
     }
 
 }
