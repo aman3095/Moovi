@@ -1,4 +1,10 @@
-# Moovi-Android-App
-Using the TMDB API to create a Movie and TV Show discovery Android application. Work in progress.
+# Moovi
+An Android application for discovery of Movies and TV Shows built using the TMDB API.
+This application uses the MVP application architecture and the following libraries:
+* Retrofit
+* Butterknife
+* Glide
 
-![Moovi](https://github.com/aman3095/Moovi-Android-App/blob/master/Moovi%20Screenshot.png)
+<img src="https://github.com/amanps/Moovi-Android-App/blob/master/Screenshot1.png" width="360">
+
+<img src="https://github.com/amanps/Moovi-Android-App/blob/master/Screenshot2.png" width="360">
