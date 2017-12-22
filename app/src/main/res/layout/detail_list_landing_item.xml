@@ -19,17 +19,38 @@
             android:layout_height="wrap_content"
             android:textSize="40sp"
             android:textColor="#ffffff"
-            android:fontFamily="sans-serif-light"/>
+            android:fontFamily="sans-serif-light"
+            android:text="Shawshank Redemption"/>
 
-        <TextView
-            android:id="@+id/rating"
+        <LinearLayout
+            android:id="@+id/rating_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_below="@id/title"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:fontFamily="sans-serif-light"
-            android:text="4.5"/>
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/star"/>
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:layout_marginLeft="5dp"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:fontFamily="sans-serif-light"/>
+
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 
