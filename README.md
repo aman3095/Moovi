@@ -1,4 +1,4 @@
-# Moovi
+# [Deprecated] Moovi
 
 This application has been ported to a newer, purely Kotlin app called Groovy. 
 
